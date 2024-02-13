@@ -21,12 +21,12 @@ a {
 #container {
   z-index: 3;
   position: relative;
-  margin: 0 15vh;
+  /* margin: 0 15vh; */
 }
 
 #menu {
   z-index: 4;
-  margin-left: 15vh;
+  /* margin-left: 15vh; */
 }
 
 .canvas-box {
@@ -100,9 +100,13 @@ a {
 }
 
 button {
-  color: rgba(127, 255, 255, 0.75);
-  background: transparent;
-  outline: 1px solid rgba(127, 255, 255, 0.75);
+  /* color: rgba(127, 255, 255, 0.75); */
+  color: #ffffff;
+  border-radius: 10px;
+  letter-spacing: 4px;
+  /* background: transparent; */
+  background: linear-gradient(90deg, #ff5656,#fe001e);
+  /* outline: 1px solid rgba(127, 255, 255, 0.75); */
   border: 0;
   padding: 1.6vh 4vh;
   margin: 0 4.6vh;
@@ -176,7 +180,8 @@ button:active {
   left: 0;
   padding-left: 1.2vh;
   top: 1.2vh;
-  z-index: 2;
+  z-index: -2;
+  opacity: 0;
 }
 
 .prize-list {
@@ -456,6 +461,8 @@ button:active {
 .shine.prize-item {
   /* width: 24vh; */
   margin: 1.8vh 0;
+  opacity: 0;
+
 }
 
 .prize-mess {
@@ -463,6 +470,7 @@ button:active {
   line-height: 5vh;
   font-size: 1.6vh;
   margin: 2.4vh 0;
+  opacity: 0;
 }
 
 .prize-shine {
@@ -471,6 +479,8 @@ button:active {
   color: #db5c58;
   vertical-align: middle;
   padding: 0 6px;
+  opacity: 0;
+
 }
 
 .qipao-container {
@@ -479,7 +489,9 @@ button:active {
   top: 10vh;
   bottom: 1vh;
   width: 24vh;
-  z-index: 2;
+  z-index: -2;
+  opacity: 0;
+
 }
 
 .qipao {
@@ -570,3 +582,99 @@ button:active {
     opacity: 0.8;
   }
 }
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  background-color: #e493d0;
+  background-image:
+  radial-gradient(closest-side, rgba(235, 105, 78, 1), rgba(235, 105, 78, 0)),
+  radial-gradient(closest-side, rgba(243, 11, 164, 1), rgba(243, 11, 164, 0)),
+  radial-gradient(closest-side, rgba(254, 234, 131, 1), rgba(254, 234, 131, 0)),
+  radial-gradient(closest-side, rgba(170, 142, 245, 1), rgba(170, 142, 245, 0)),
+  radial-gradient(closest-side, rgba(248, 192, 147, 1), rgba(248, 192, 147, 0));
+  background-size:
+  130vmax 130vmax,
+  80vmax 80vmax,
+  90vmax 90vmax,
+  110vmax 110vmax,
+  90vmax 90vmax;
+  background-position:
+  -80vmax -80vmax,
+  60vmax -30vmax,
+  10vmax 10vmax,
+  -30vmax -10vmax,
+  50vmax 50vmax;
+  background-repeat: no-repeat;
+  animation: 10s movement linear infinite;
+  }
+
+  body::after {
+    content: '';
+    display: block;
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    }
+    @keyframes movement {
+      0%, 100% {
+      background-size:
+      130vmax 130vmax,
+      80vmax 80vmax,
+      90vmax 90vmax,
+      110vmax 110vmax,
+      90vmax 90vmax;
+      background-position:
+      -80vmax -80vmax,
+      60vmax -30vmax,
+      10vmax 10vmax,
+      -30vmax -10vmax,
+      50vmax 50vmax;
+    }
+    25% {
+    background-size:
+    100vmax 100vmax,
+    90vmax 90vmax,
+    100vmax 100vmax,
+    90vmax 90vmax,
+    60vmax 60vmax;
+    background-position:
+    -60vmax -90vmax,
+    50vmax -40vmax,
+    0vmax -20vmax,
+    -40vmax -20vmax,
+    40vmax 60vmax;
+    }
+    50% {
+    background-size:
+    80vmax 80vmax,
+    110vmax 110vmax,
+    80vmax 80vmax,
+    60vmax 60vmax,
+    80vmax 80vmax;
+    background-position:
+    -50vmax -70vmax,
+    40vmax -30vmax,
+    10vmax 0vmax,
+    20vmax 10vmax,
+    30vmax 70vmax;
+    }
+    75% {
+    background-size:
+    90vmax 90vmax,
+    90vmax 90vmax,
+    100vmax 100vmax,
+    90vmax 90vmax,
+    70vmax 70vmax;
+    background-position:
+    -50vmax -40vmax,
+    50vmax -30vmax,
+    20vmax 0vmax,
+    -10vmax 10vmax,
+    40vmax 60vmax;
+    }
+  }    

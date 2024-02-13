@@ -143,6 +143,7 @@ router.post("/export", (req, res, next) => {
     outData.push([item.text]);
     outData = outData.concat(luckyData[item.type] || []);
   });
+  console.log('outData',outData)
 
   writeXML(outData, "/抽奖结果.xlsx")
     .then(dt => {
@@ -243,6 +244,10 @@ function getLeftUsers() {
   });
   curData.leftUsers = leftUsers;
 }
+
+// 
+
+
 
 loadData();
 

@@ -345,11 +345,12 @@ function createCard(user, isBold, id, showTable) {
       "rgba(0,127,127," + (Math.random() * 0.7 + 0.25) + ")";
   }
   //添加公司标识
-  element.appendChild(createElement("company", COMPANY));
+  // element.appendChild(createElement("company", COMPANY));
 
   element.appendChild(createElement("name", user[1]));
 
-  element.appendChild(createElement("details", user[0] + "<br/>" + user[2]));
+  element.appendChild(createElement("details", user[0] ));
+  // element.appendChild(createElement("details", user[0] + "<br/>" + user[2]));
   return element;
 }
 
@@ -707,9 +708,9 @@ function random(num) {
 function changeCard(cardIndex, user) {
   let card = threeDCards[cardIndex].element;
 
-  card.innerHTML = `<div class="company">${COMPANY}</div><div class="name">${
+  card.innerHTML = `<div class="name">${
     user[1]
-  }</div><div class="details">${user[0] || ""}<br/>${user[2] || "PSST"}</div>`;
+  }</div><div class="details">${user[0] || ""}</div>`;
 }
 
 /**
@@ -855,7 +856,7 @@ window.onload = function () {
             animate();
           },
           () => {
-            addQipao("背景音乐自动播放失败，请手动播放！");
+            // addQipao("背景音乐自动播放失败，请手动播放！");
           }
         );
       } else {

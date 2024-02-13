@@ -1,0 +1,7 @@
+POST http://localhost:9000/addUser HTTP/1.2
+content-type: application/json
+
+{
+    "name":"Hendry",
+    "phone":"61888"
+}
