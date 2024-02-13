@@ -3,6 +3,8 @@ const opn = require("opn");
 const bodyParser = require("body-parser");
 const path = require("path");
 const chokidar = require("chokidar");
+const ExcelJS = require('exceljs');
+const fs = require('fs');
 const cfg = require("./config");
 
 const {
@@ -161,6 +163,63 @@ router.post("/export", (req, res, next) => {
       });
       log(`导出数据失败！`);
     });
+});
+
+router.post('/add', async(req, res) => {
+  const { phoneNumber, name } = req.body;
+
+  if (!phoneNumber || !name) {
+      return res.status(400).json({ message: 'Phone number and name are required.' });
+  }
+  
+
+  let time =  new Date().toISOString()
+  // 变成上海时间 东八区
+  time = new Date(time).getTime() + 8 * 60 * 60 * 1000
+  // 格式化为 2020-01-01 12:00:00
+  time = new Date(time).toISOString().replace('T', ' ').replace(/\.\d{3}Z/, '')
+
+
+  // 时间戳
+  let timeStamp = new Date().getTime()
+  const data = {
+      id: timeStamp,
+      phoneNumber,
+      name,
+      timestamp: time
+  };
+  log(`收集到的数据：${JSON.stringify(data, 2)}`);
+
+  const workbook = new ExcelJS.Workbook();
+  let worksheet;
+
+  const dir = path.join(process.cwd(), '/server/data');
+  if (!fs.existsSync(dir)){
+    fs.mkdirSync(dir, { recursive: true });
+}
+
+const filePath = path.join(dir, 'data.xlsx');
+
+  if (fs.existsSync(filePath)) {
+      await workbook.xlsx.readFile(filePath);
+      worksheet = workbook.getWorksheet(1);
+  } else {
+      worksheet = workbook.addWorksheet('Data');
+      worksheet.columns = [
+          { header: '工号', key: 'phoneNumber', width: 15},
+          { header: '姓名', key: 'name', width: 15 },
+          { header: '部门', key: 'name', width: 32 },
+          { header: '时间', key: 'timestamp', width: 19 },
+          { header: 'id', key: 'id', width: 19 },
+      ];
+  }
+
+  worksheet.addRow(data);
+  await workbook.xlsx.writeFile(filePath);
+
+  // Save data to database here
+
+  res.status(200).json({ message: 'Data collected successfully.' });
 });
 
 //对于匹配不到的路径或者请求，返回默认页面
