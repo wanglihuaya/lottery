@@ -193,7 +193,7 @@ router.post('/add', async(req, res) => {
   const workbook = new ExcelJS.Workbook();
   let worksheet;
 
-  const dir = path.join(process.cwd(), '/server/data');
+  const dir = path.join(process.cwd(), '/../server/data');
   if (!fs.existsSync(dir)){
     fs.mkdirSync(dir, { recursive: true });
 }
@@ -203,18 +203,25 @@ const filePath = path.join(dir, 'data.xlsx');
   if (fs.existsSync(filePath)) {
       await workbook.xlsx.readFile(filePath);
       worksheet = workbook.getWorksheet(1);
+      
   } else {
       worksheet = workbook.addWorksheet('Data');
       worksheet.columns = [
-          { header: '工号', key: 'phoneNumber', width: 15},
+          { header: '工号', key: 'phoneNumber', width: 10},
           { header: '姓名', key: 'name', width: 15 },
-          { header: '部门', key: 'name', width: 32 },
-          { header: '时间', key: 'timestamp', width: 19 },
-          { header: 'id', key: 'id', width: 19 },
+          { header: '部门', key: 'dept', width: 4},
+          { header: '时间', key: 'timestamp', width: 24 },
+          { header: 'id', key: 'id', width: 24 ,type: 'string'},
       ];
   }
 
-  worksheet.addRow(data);
+  const row = worksheet.addRow(data);
+  // log(`row: ${JSON.stringify(row, 2data);
+  log(`data: ${JSON.stringify(data, 2)}`);
+
+
+  row.getCell(1).numFmt = '@';  // Set the format of the phone number cell to text
+  row.getCell(5).numFmt = '@';  // Set the format of the phone number cell to text
   await workbook.xlsx.writeFile(filePath);
 
   // Save data to database here
