@@ -3,37 +3,41 @@ const CleanWebpackPlugin = require("clean-webpack-plugin");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
 const CopyWebpackPlugin = require("copy-webpack-plugin");
 const path = require("path");
+const packageName = require("./package.json").name;
 
 module.exports = {
   entry: path.join(__dirname, "/src/lottery/index.js"),
   output: {
     path: path.join(__dirname, "/dist"),
-    filename: "lottery.js"
+    filename: "lottery.js",
+    library: `${packageName}-[name]`,
+    libraryTarget: "umd",
+    jsonpFunction: `webpackJsonp_${packageName}`,
   },
   module: {
     rules: [
       {
         test: /(\.jsx|\.js)$/,
         use: {
-          loader: "babel-loader"
+          loader: "babel-loader",
         },
-        exclude: /node_modules/
+        exclude: /node_modules/,
       },
       {
         test: /\.css$/,
         use: [
           {
-            loader: "style-loader"
+            loader: "style-loader",
           },
           {
-            loader: "css-loader"
+            loader: "css-loader",
           },
           {
-            loader: "postcss-loader"
-          }
-        ]
-      }
-    ]
+            loader: "postcss-loader",
+          },
+        ],
+      },
+    ],
   },
   plugins: [
     new webpack.BannerPlugin("版权所有，翻版必究"),
@@ -48,28 +52,28 @@ module.exports = {
         // 压缩JS
         minifyJS: true,
         // 移除空格
-        collapseWhitespace: true
+        collapseWhitespace: true,
       },
       hash: true,
-      inject: true
+      inject: true,
     }),
     new CopyWebpackPlugin([
       {
         from: "./src/css",
-        to: "./css"
+        to: "./css",
       },
       {
         from: "./src/data",
-        to: "./data"
+        to: "./data",
       },
       {
         from: "./src/img",
-        to: "./img"
+        to: "./img",
       },
       {
         from: "./src/lib",
-        to: "./lib"
-      }
-    ])
-  ]
+        to: "./lib",
+      },
+    ]),
+  ],
 };

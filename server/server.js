@@ -3,8 +3,8 @@ const opn = require("opn");
 const bodyParser = require("body-parser");
 const path = require("path");
 const chokidar = require("chokidar");
-const ExcelJS = require('exceljs');
-const fs = require('fs');
+const ExcelJS = require("exceljs");
+const fs = require("fs");
 const cfg = require("./config");
 
 const {
@@ -13,7 +13,7 @@ const {
   writeXML,
   saveDataFile,
   shuffle,
-  saveErrorDataFile
+  saveErrorDataFile,
 } = require("./help");
 
 let app = express(),
@@ -30,13 +30,13 @@ let app = express(),
 //这里指定参数使用 json 格式
 app.use(
   bodyParser.json({
-    limit: "1mb"
+    limit: "1mb",
   })
 );
 
 app.use(
   bodyParser.urlencoded({
-    extended: true
+    extended: true,
   })
 );
 
@@ -52,7 +52,7 @@ app.get("/", (req, res) => {
 });
 
 //设置跨域访问
-app.all("*", function(req, res, next) {
+app.all("*", function (req, res, next) {
   res.header("Access-Control-Allow-Origin", "*");
   res.header("Access-Control-Allow-Headers", "X-Requested-With");
   res.header("Access-Control-Allow-Methods", "PUT,POST,GET,DELETE,OPTIONS");
@@ -72,7 +72,7 @@ router.post("/getTempData", (req, res, next) => {
   res.json({
     cfgData: cfg,
     leftUsers: curData.leftUsers,
-    luckyData: luckyData
+    luckyData: luckyData,
   });
 });
 
@@ -82,9 +82,9 @@ router.post("/reset", (req, res, next) => {
   errorData = [];
   log(`重置数据成功`);
   saveErrorDataFile(errorData);
-  return saveDataFile(luckyData).then(data => {
+  return saveDataFile(luckyData).then((data) => {
     res.json({
-      type: "success"
+      type: "success",
     });
   });
 });
@@ -105,15 +105,15 @@ router.post("/getPrizes", (req, res, next) => {
 router.post("/saveData", (req, res, next) => {
   let data = req.body;
   setLucky(data.type, data.data)
-    .then(t => {
+    .then((t) => {
       res.json({
-        type: "设置成功！"
+        type: "设置成功！",
       });
       log(`保存奖品数据成功`);
     })
-    .catch(data => {
+    .catch((data) => {
       res.json({
-        type: "设置失败！"
+        type: "设置失败！",
       });
       log(`保存奖品数据失败`);
     });
@@ -123,15 +123,15 @@ router.post("/saveData", (req, res, next) => {
 router.post("/errorData", (req, res, next) => {
   let data = req.body;
   setErrorData(data.data)
-    .then(t => {
+    .then((t) => {
       res.json({
-        type: "设置成功！"
+        type: "设置成功！",
       });
       log(`保存没来人员数据成功`);
     })
-    .catch(data => {
+    .catch((data) => {
       res.json({
-        type: "设置失败！"
+        type: "设置失败！",
       });
       log(`保存没来人员数据失败`);
     });
@@ -141,92 +141,101 @@ router.post("/errorData", (req, res, next) => {
 router.post("/export", (req, res, next) => {
   let type = [1, 2, 3, 4, 5, defaultType],
     outData = [["工号", "姓名", "部门"]];
-  cfg.prizes.forEach(item => {
+  cfg.prizes.forEach((item) => {
     outData.push([item.text]);
     outData = outData.concat(luckyData[item.type] || []);
   });
-  console.log('outData',outData)
+  console.log("outData", outData);
 
   writeXML(outData, "/抽奖结果.xlsx")
-    .then(dt => {
+    .then((dt) => {
       // res.download('/抽奖结果.xlsx');
       res.status(200).json({
         type: "success",
-        url: "抽奖结果.xlsx"
+        url: "抽奖结果.xlsx",
       });
       log(`导出数据成功！`);
     })
-    .catch(err => {
+    .catch((err) => {
       res.json({
         type: "error",
-        error: err.error
+        error: err.error,
       });
       log(`导出数据失败！`);
     });
 });
 
-router.post('/add', async(req, res) => {
+router.post("/add", async (req, res) => {
   const { phoneNumber, name } = req.body;
 
   if (!phoneNumber || !name) {
-      return res.status(400).json({ message: 'Phone number and name are required.' });
+    return res
+      .status(400)
+      .json({ message: "Phone number and name are required." });
   }
-  
 
-  let time =  new Date().toISOString()
+  let time = new Date().toISOString();
   // 变成上海时间 东八区
-  time = new Date(time).getTime() + 8 * 60 * 60 * 1000
+  time = new Date(time).getTime() + 8 * 60 * 60 * 1000;
   // 格式化为 2020-01-01 12:00:00
-  time = new Date(time).toISOString().replace('T', ' ').replace(/\.\d{3}Z/, '')
-
+  time = new Date(time)
+    .toISOString()
+    .replace("T", " ")
+    .replace(/\.\d{3}Z/, "");
 
   // 时间戳
-  let timeStamp = new Date().getTime()
+  let timeStamp = new Date().getTime();
   const data = {
-      id: timeStamp,
-      phoneNumber,
-      name,
-      timestamp: time
+    id: timeStamp,
+    phoneNumber,
+    name,
+    timestamp: time,
   };
   log(`收集到的数据：${JSON.stringify(data, 2)}`);
 
   const workbook = new ExcelJS.Workbook();
   let worksheet;
 
-  const dir = path.join(process.cwd(), '/../server/data');
-  if (!fs.existsSync(dir)){
+  const dir = path.join(process.cwd(), "/../server/data");
+  if (!fs.existsSync(dir)) {
     fs.mkdirSync(dir, { recursive: true });
-}
+  }
 
-const filePath = path.join(dir, 'data.xlsx');
+  const filePath = path.join(dir, "data.xlsx");
 
   if (fs.existsSync(filePath)) {
-      await workbook.xlsx.readFile(filePath);
-      worksheet = workbook.getWorksheet(1);
-      
+    await workbook.xlsx.readFile(filePath);
+    worksheet = workbook.getWorksheet(1);
   } else {
-      worksheet = workbook.addWorksheet('Data');
-      worksheet.columns = [
-          { header: '工号', key: 'phoneNumber', width: 10},
-          { header: '姓名', key: 'name', width: 15 },
-          { header: '部门', key: 'dept', width: 4},
-          { header: '时间', key: 'timestamp', width: 24 },
-          { header: 'id', key: 'id', width: 24 ,type: 'string'},
-      ];
+    worksheet = workbook.addWorksheet("Data");
+    worksheet.columns = [
+      { header: "工号", key: "phoneNumber", width: 10 },
+      { header: "姓名", key: "name", width: 15 },
+      { header: "部门", key: "dept", width: 4 },
+      { header: "时间", key: "timestamp", width: 24 },
+      { header: "id", key: "id", width: 24, type: "string" },
+    ];
   }
 
   const row = worksheet.addRow(data);
   // log(`row: ${JSON.stringify(row, 2data);
   log(`data: ${JSON.stringify(data, 2)}`);
 
-
-  row.getCell(1).numFmt = '@';  // Set the format of the phone number cell to text
-  row.getCell(5).numFmt = '@';  // Set the format of the phone number cell to text
+  row.getCell(1).numFmt = "@"; // Set the format of the phone number cell to text
+  row.getCell(5).numFmt = "@"; // Set the format of the phone number cell to text
   await workbook.xlsx.writeFile(filePath);
 
   // Save data to database here
 
-  res.status(200).json({ message: 'Data collected successfully.' });
+  res.status(200).json({ message: "Data collected successfully." });
+});
+
+router.get("/loadData", async (req, res) => {
+  loadData();
+  res.json({
+    length: curData.users.length,
+  });
+  global.console.log("重新加载数据成功", curData.users.length);
 });
 
 //对于匹配不到的路径或者请求，返回默认页面
@@ -241,7 +250,7 @@ router.all("*", (req, res) => {
     }
   } else if (req.method.toLowerCase() === "post") {
     let postBackData = {
-      error: "empty"
+      error: "empty",
     };
     res.send(JSON.stringify(postBackData));
   }
@@ -275,17 +284,17 @@ function loadData() {
   let cfgData = {};
 
   // curData.users = loadXML(path.join(cwd, "data/users.xlsx"));
-  curData.users = loadXML(path.join(dataBath, "data/users.xlsx"));
+  curData.users = loadXML(path.join(dataBath, "../../output/users.xlsx"));
   // 重新洗牌
   shuffle(curData.users);
 
   // 读取已经抽取的结果
   loadTempData()
-    .then(data => {
+    .then((data) => {
       luckyData = data[0];
       errorData = data[1];
     })
-    .catch(data => {
+    .catch((data) => {
       curData.leftUsers = Object.assign([], curData.users);
     });
 }
@@ -295,30 +304,28 @@ function getLeftUsers() {
   let lotteredUser = {};
   for (let key in luckyData) {
     let luckys = luckyData[key];
-    luckys.forEach(item => {
+    luckys.forEach((item) => {
       lotteredUser[item[0]] = true;
     });
   }
   // 记录当前已抽取但是不在线人员
-  errorData.forEach(item => {
+  errorData.forEach((item) => {
     lotteredUser[item[0]] = true;
   });
 
   let leftUsers = Object.assign([], curData.users);
-  leftUsers = leftUsers.filter(user => {
+  leftUsers = leftUsers.filter((user) => {
     return !lotteredUser[user[0]];
   });
   curData.leftUsers = leftUsers;
 }
 
-// 
-
-
+//
 
 loadData();
 
 module.exports = {
-  run: function(devPort, noOpen) {
+  run: function (devPort, noOpen) {
     let openBrowser = true;
     if (process.argv.length > 3) {
       if (process.argv[3] && (process.argv[3] + "").toLowerCase() === "n") {
@@ -338,7 +345,6 @@ module.exports = {
       let host = server.address().address;
       let port = server.address().port;
       global.console.log(`lottery server listenig at http://${host}:${port}`);
-      openBrowser && opn(`http://127.0.0.1:${port}`);
     });
-  }
+  },
 };
