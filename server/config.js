@@ -13,39 +13,39 @@ const prizes = [
     title: "",
     text: "特别奖",
   },
-  {
-    type: 1,
-    count: 2,
-    title: "一等奖",
-    text: "一等奖",
-  },
-  {
-    type: 2,
-    count: 5,
-    text: "二等奖",
-    title: "二等奖",
-    img: "../img/secrit.jpg",
-  },
-  {
-    type: 3,
-    count: 10,
-    text: "三等奖",
-    title: "三等奖",
-    img: "../img/mbp.jpg",
-  },
-  {
-    type: 4,
-    count: 10,
-    text: "幸运奖",
-    title: "幸运奖",
-    img: "../img/huawei.png",
-  },
+  // {
+  //   type: 1,
+  //   count: 2,
+  //   title: "一等奖",
+  //   text: "一等奖",
+  // },
+  // {
+  //   type: 2,
+  //   count: 5,
+  //   text: "二等奖",
+  //   title: "二等奖",
+  //   img: "../img/secrit.jpg",
+  // },
+  // {
+  //   type: 3,
+  //   count: 10,
+  //   text: "三等奖",
+  //   title: "三等奖",
+  //   img: "../img/mbp.jpg",
+  // },
+  // {
+  //   type: 4,
+  //   count: 10,
+  //   text: "幸运奖",
+  //   title: "幸运奖",
+  //   img: "../img/huawei.png",
+  // },
 ];
 
 /**
  * 一次抽取的奖品个数与prizes对应
  */
-const EACH_COUNT = [1, 2, 5, 10, 10];
+const EACH_COUNT = [1];
 
 /**
  * 卡片公司名称标识
