@@ -16,7 +16,7 @@
 
   var c = canvas.getContext("2d");
 
-  var numStars = 800;
+  var numStars = 8000;
   var radius = "0." + Math.floor(Math.random() * 9) + 1;
   var focalLength = canvas.width * 2;
   var warp = 0;
@@ -46,7 +46,7 @@
         x: Math.random() * canvas.width,
         y: Math.random() * canvas.height,
         z: Math.random() * canvas.width,
-        o: "0." + Math.floor(Math.random() * 99) + 1
+        o: "0." + Math.floor(Math.random() * 99) + 1,
       };
       stars.push(star);
     }
@@ -76,10 +76,10 @@
       initializeStars();
     }
     if (warp == 0) {
-      c.fillStyle = "rgba(0,10,20,1)";
+      c.fillStyle = "rgba(208, 99, 81,1)";
       c.fillRect(0, 0, canvas.width, canvas.height);
     }
-    c.fillStyle = "rgba(209, 255, 255, " + radius + ")";
+    c.fillStyle = "rgba(209, 255, 255, " + 1 + ")";
     for (i = 0; i < numStars; i++) {
       star = stars[i];
 
@@ -90,7 +90,7 @@
       pixelRadius = 1 * (focalLength / star.z);
 
       c.fillRect(pixelX, pixelY, pixelRadius, pixelRadius);
-      c.fillStyle = "rgba(209, 255, 255, " + star.o + ")";
+      c.fillStyle = "rgba(209, 255, 255, " + 1 + ")";
       //c.fill();
     }
   }

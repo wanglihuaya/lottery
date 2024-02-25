@@ -34,8 +34,19 @@ a {
   left: 0;
   top: 0;
   z-index: -1;
+  opacity: 0.2;
 }
-
+.title-name {
+  position: absolute;
+  top: 64px;
+  left: 0;
+  right: 0;
+  text-align: center;
+  font-size: 3.6vh;
+  color: #ffffff;
+  text-shadow: 0 0 1vh rgba(239, 227, 185, 0.95);
+  z-index: 1;
+}
 #info {
   position: absolute;
   width: 100%;
@@ -58,16 +69,21 @@ a {
 .element {
   width: 12vh;
   height: 16vh;
-  box-shadow: 0 0 12px rgba(0, 255, 255, 0.5);
-  border: 1px solid rgba(127, 255, 255, 0.25);
+  box-shadow: 0 0 12px rgba(239, 227, 185);
+
+  border: 1px solid rgba(239, 227, 185);
   text-align: center;
   cursor: default;
   transition: background-color 0.3s ease-in;
 }
 
 .element:hover {
-  box-shadow: 0 0 12px rgba(0, 255, 255, 0.75);
-  border: 1px solid rgba(127, 255, 255, 0.75);
+  /* box-shadow: 0 0 12px rgba(0, 255, 255, 0.75);
+  border: 1px solid rgba(127, 255, 255, 0.75); */
+
+  box-shadow: 0 0 12px rgba(239, 227, 185);
+
+  border: 1px solid rgba(239, 227, 185);
 }
 
 .element .company {
@@ -87,7 +103,7 @@ a {
   font-size: 2.9vh;
   font-weight: bold;
   color: rgba(255, 255, 255, 0.75);
-  text-shadow: 0 0 1vh rgba(0, 255, 255, 0.95);
+  text-shadow: 0 0 1vh rgba(239, 227, 185, 0.95);
 }
 
 .element .details {
@@ -96,7 +112,7 @@ a {
   left: 0;
   right: 0;
   font-size: 1.6vh;
-  color: rgba(127, 255, 255, 0.75);
+  color: rgba(239, 227, 185, 0.75);
 }
 
 button {
@@ -591,23 +607,19 @@ button:active {
 body {
   margin: 0;
   min-height: 100vh;
-  background-color: #e493d0;
+  background-color: rgb(208, 89, 81);
   background-image: radial-gradient(
       closest-side,
-      rgba(235, 105, 78, 1),
+      rgb(211, 81, 55),
       rgba(235, 105, 78, 0)
     ),
-    radial-gradient(closest-side, rgba(243, 11, 164, 1), rgba(243, 11, 164, 0)),
+    radial-gradient(closest-side, rgba(208, 99, 81, 1), rgba(243, 11, 164, 0)),
     radial-gradient(
       closest-side,
-      rgba(254, 234, 131, 1),
+      rgba(248, 192, 147, 1),
       rgba(254, 234, 131, 0)
     ),
-    radial-gradient(
-      closest-side,
-      rgba(170, 142, 245, 1),
-      rgba(170, 142, 245, 0)
-    ),
+    radial-gradient(closest-side, rgba(208, 99, 81, 1), rgba(170, 142, 245, 0)),
     radial-gradient(
       closest-side,
       rgba(248, 192, 147, 1),
