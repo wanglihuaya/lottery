@@ -6,6 +6,7 @@ const chokidar = require("chokidar");
 const ExcelJS = require("exceljs");
 const fs = require("fs");
 const cfg = require("./config");
+const axios = require("axios");
 
 const {
   loadXML,
@@ -283,8 +284,21 @@ function loadData() {
   console.log("加载EXCEL数据文件");
   let cfgData = {};
 
-  // curData.users = loadXML(path.join(cwd, "data/users.xlsx"));
-    // curData.users = loadXML(path.join(dataBath, "../../output/users.xlsx"));
+  axios({
+    method: "get",
+    url: "https://strapi.zeabur.app/api/export",
+    // responseType: "arraybuffer",
+  })
+    .then((response) => {
+      fs.writeFileSync(path.join(dataBath, "data/users.xlsx"), response.data);
+      console.log("users.xlsx 文件下载并保存成功");
+    })
+    .catch((error) => {
+      console.error("下载 users.xlsx 文件失败", error);
+    });
+
+
+
   curData.users = loadXML(path.join(dataBath, "data/users.xlsx"));
   // 重新洗牌
   shuffle(curData.users);
