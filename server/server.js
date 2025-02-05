@@ -280,18 +280,26 @@ function setErrorData(data) {
 
 app.use(router);
 
-function loadData() {
+ function loadData() {
   console.log("加载EXCEL数据文件");
   let cfgData = {};
 
   axios({
     method: "get",
     url: "https://strapi.zeabur.app/api/export",
-    // responseType: "arraybuffer",
+      //  responseType: 'stream', // 确保响应类型为流
+    responseType: "arraybuffer",
   })
     .then((response) => {
-      fs.writeFileSync(path.join(dataBath, "data/users.xlsx"), response.data);
-      console.log("users.xlsx 文件下载并保存成功");
+      const filePath = path.resolve(dataBath, "data/users.xlsx");
+      // const writer = fs.createWriteStream(filePath);
+      fs.writeFile(filePath, response.data, (err) => {
+        if (err) {
+          console.log("users.xlsx 文件下载并保存失败", err);
+        } else {
+          console.log("users.xlsx 文件下载并保存成功");
+        }
+      });
     })
     .catch((error) => {
       console.error("下载 users.xlsx 文件失败", error);
