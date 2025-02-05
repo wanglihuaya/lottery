@@ -210,7 +210,7 @@ const COMPANY = "MoShang";
          - "443:443"
        volumes:
          - "lottery_log:/var/log"
-       image: "panda1024/lottery:[TAG]" 
+       image: "wanglihuaya/lottery:[TAG]" 
        restart: always
    ```
 

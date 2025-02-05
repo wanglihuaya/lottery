@@ -138,7 +138,7 @@ router.post("/errorData", (req, res, next) => {
 });
 
 // 保存数据到excel中去
-router.post("/export", (req, res, next) => {
+router.get("/export", (req, res, next) => {
   let type = [1, 2, 3, 4, 5, defaultType],
     outData = [["工号", "姓名", "部门"]];
   cfg.prizes.forEach((item) => {
@@ -283,8 +283,8 @@ function loadData() {
   console.log("加载EXCEL数据文件");
   let cfgData = {};
 
-  // curData.users = loadXML(path.join(cwd, "data/users.xlsx"));
-  curData.users = loadXML(path.join(dataBath, "../../output/users.xlsx"));
+  curData.users = loadXML(path.join(cwd, "data/users.xlsx"));
+    // curData.users = loadXML(path.join(dataBath, "../../output/users.xlsx"));
   // 重新洗牌
   shuffle(curData.users);
 

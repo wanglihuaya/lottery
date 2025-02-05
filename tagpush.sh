@@ -1,4 +1,4 @@
 TAG=$1
 
-docker tag lottery:latest panda1024/lottery:${TAG}
-docker push panda1024/lottery:${TAG}
+docker tag lottery:latest ccr.ccs.tencentyun.com/lihua/lottery:${TAG}
+docker push ccr.ccs.tencentyun.com/lihua/lottery:${TAG}
