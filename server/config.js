@@ -50,7 +50,7 @@ const EACH_COUNT = [1];
 /**
  * 卡片公司名称标识
  */
-const COMPANY = "泛康医学集团";
+const COMPANY = "小张集团";
 
 module.exports = {
   prizes,
